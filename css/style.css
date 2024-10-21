@@ -1,0 +1,255 @@
+.btn-reset,
+a {
+  border: none;
+  outline: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-scroll-behavior: smooth; /* Добавляем префикс для Safari */
+  scroll-behavior: smooth;
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+:focus-visible {
+  outline: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: initial;
+}
+
+img {
+  -ms-interpolation-mode: bicubic; /* Поддержка IE */
+  max-width: 100%;
+}
+
+body {
+  height: 100%;
+  background: #fff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.btn-reset {
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+}
+
+input::-webkit-search-cancel-button,
+input::-webkit-search-decoration,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration {
+  display: none;
+}
+
+.shop {
+  width: 100%;
+  height: 100vh;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop__container {
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shelf {
+  position: relative;
+  z-index: 5;
+  background-image: url(../img/shelf.svg);
+  background-repeat: no-repeat;
+  background-position: 100%;
+  width: 212px;
+  height: 500px;
+}
+
+.shelf__product {
+  position: absolute;
+  z-index: 10;
+  cursor: grab;
+}
+
+.shelf__product:active {
+  cursor: grabbing;
+  -webkit-cursor: grabbing; /* Добавляем для Safari */
+}
+
+.shelf__product--wine,
+.shelf__product--milk,
+.shelf__product--jam,
+.shelf__product--cheese {
+  bottom: 68%;
+}
+
+.shelf__product--beef,
+.shelf__product--chicken,
+.shelf__product--cookies {
+  bottom: 48%;
+}
+
+.shelf__product--pineapple,
+.shelf__product--banana,
+.shelf__product--apple,
+.shelf__product--salad {
+  bottom: 30%;
+}
+
+.shelf__product--wine {
+  left: 23px;
+}
+
+.shelf__product--milk {
+  left: 67px;
+}
+
+.shelf__product--jam {
+  left: 106px;
+}
+
+.shelf__product--cheese {
+  right: 15px;
+}
+
+.shelf__product--beef {
+  left: 8px;
+}
+
+.shelf__product--chicken {
+  left: 60px;
+  bottom: 46%;
+}
+
+.shelf__product--cookies {
+  right: 8px;
+}
+
+.shelf__product--pineapple {
+  left: 13px;
+}
+
+.shelf__product--banana {
+  left: 58px;
+}
+
+.shelf__product--apple {
+  right: 60px;
+}
+
+.shelf__product--salad {
+  right: -8px;
+}
+
+.cart {
+  position: absolute;
+  z-index: 15;
+  bottom: -60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart__icon {
+  position: relative;
+  z-index: 15;
+  padding: 20px;
+}
+
+.cart__product {
+  position: absolute;
+  top: 96px;
+  right: 49px;
+  width: 183px;
+  height: 100px;
+}
+
+.cart__button {
+  position: absolute;
+  z-index: 20;
+  bottom: 30px;
+  border-radius: 16px;
+  padding: 20px 18px;
+  background-color: rgb(252, 224, 0);
+  color: rgb(33, 32, 31);
+  font-size: 1rem;
+  line-height: 1.06rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease-in, color 0.3s ease-in-out,
+    visibility 0.3s ease-in, opacity 0.3s ease-in;
+  -webkit-transition: background-color 0.3s ease-in, color 0.3s ease-in-out,
+    visibility 0.3s ease-in, opacity 0.3s ease-in; /* Префикс для Safari */
+  -moz-transition: background-color 0.3s ease-in, color 0.3s ease-in-out,
+    visibility 0.3s ease-in, opacity 0.3s ease-in; /* Префикс для Firefox */
+}
+
+.cart__button:hover,
+.cart__button:focus-visible {
+  background-color: rgb(141, 125, 5);
+  color: #fff;
+}
+
+.fade-in,
+.fade-out {
+  transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out; /* Префикс для Safari */
+  -moz-transition: opacity 0.5s ease-in-out; /* Префикс для Firefox */
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-out {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
