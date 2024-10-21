@@ -1,72 +1,103 @@
-const products = document.querySelectorAll('.shelf__product');
-const cart = document.getElementById('cart');
-const payBtn = document.getElementById('payment');
+const products = document.querySelectorAll('.shelf__product'); // Продукты
+const cart = document.getElementById('cart'); // Корзина
+const payBtn = document.getElementById('payment'); // Ссылка
 let itemCount = 0;
+let draggedElement = null;
+let initialPosition = {};
 
+// Уникальные ID для продуктов и обработчики событий
 products.forEach((product, index) => {
   product.id = `product${index + 1}`;
 
-  // Добавляем обработчики событий для мыши и касаний
-  product.addEventListener('dragstart', dragStart);
-  product.addEventListener('touchstart', handleTouchStart);
+  product.addEventListener('dragstart', dragStart); // десктоп
+  product.addEventListener('touchstart', touchStart); //сенсор
+  product.addEventListener('touchmove', touchMove);
+  product.addEventListener('touchend', touchEnd);
 });
 
-// Обработка перетаскивания
 function dragStart(e) {
   e.dataTransfer.setData('text', e.target.id);
 }
 
-function handleTouchStart(e) {
+function touchStart(e) {
+  draggedElement = e.target;
+  const rect = draggedElement.getBoundingClientRect();
+  initialPosition = {
+    x: e.touches[0].clientX - rect.left,
+    y: e.touches[0].clientY - rect.top,
+  };
+  draggedElement.style.position = 'absolute';
+}
+
+function touchMove(e) {
+  if (!draggedElement) return;
+
   const touch = e.touches[0];
-  const productId = e.target.id;
-  e.dataTransfer.setData('text/plain', productId);
+  const offsetX = touch.clientX - initialPosition.x;
+  const offsetY = touch.clientY - initialPosition.y;
 
-  // Позиционируем элемент на экране
-  e.target.style.position = 'absolute';
-  e.target.style.left = `${touch.clientX}px`;
-  e.target.style.top = `${touch.clientY}px`;
+  // Обновляем позицию
+  draggedElement.style.left = `${offsetX}px`;
+  draggedElement.style.top = `${offsetY}px`;
 }
 
-// Обработка сброса продукта в корзину
-cart.addEventListener('dragover', allowDrop);
-cart.addEventListener('drop', dropProduct);
-cart.addEventListener('touchmove', allowDrop);
+function touchEnd() {
+  if (!draggedElement) return;
 
-// Разрешаем сброс в корзину
-function allowDrop(e) {
+  const cartRect = cart.getBoundingClientRect();
+  const draggedRect = draggedElement.getBoundingClientRect();
+
+  // Проверка попадания в корзину
+  if (
+    draggedRect.left < cartRect.right &&
+    draggedRect.right > cartRect.left &&
+    draggedRect.top < cartRect.bottom &&
+    draggedRect.bottom > cartRect.top
+  ) {
+    dropProduct(draggedElement); // Добавляем в корзину
+  } else {
+    // Возвращаем на место
+    draggedElement.style.position = '';
+    draggedElement.style.left = '';
+    draggedElement.style.top = '';
+  }
+
+  draggedElement = null;
+}
+
+function dropProduct(product) {
+  itemCount++;
+  product.classList.add('fade-out');
+
+  setTimeout(() => {
+    product.style.position = 'absolute'; // Перемещаем продукт
+    product.style.bottom = '70px';
+
+    // Позиции по горизонтали
+    const leftPositions = ['92px', '150px', '200px', '115px'];
+    product.style.left = leftPositions[(itemCount - 1) % leftPositions.length];
+
+    cart.appendChild(product);
+
+    setTimeout(() => {
+      product.classList.add('fade-in');
+      product.style.opacity = '1'; // Показываем продукт
+    }, 100);
+  }, 500);
+
+  // Показываем кнопку "Оплатить", если продуктов >= 3
+  if (itemCount >= 3) {
+    payBtn.classList.remove('hide');
+  }
+}
+
+// Для сброса на десктопах
+cart.addEventListener('dragover', e => {
   e.preventDefault();
-}
-
-// Добавляем продукт в корзину
-function dropProduct(e) {
+});
+cart.addEventListener('drop', e => {
   e.preventDefault();
   const productId = e.dataTransfer.getData('text');
   const product = document.getElementById(productId);
-
-  if (product) {
-    itemCount++;
-    product.classList.add('fade-out');
-
-    setTimeout(() => {
-      product.style.opacity = '0';
-
-      product.style.bottom = '70px';
-      const leftPositions = ['92px', '150px', '200px', '115px'];
-      product.style.left =
-        leftPositions[(itemCount - 1) % leftPositions.length];
-
-      cart.appendChild(product);
-
-      // Плавное появление продукта в корзине
-      setTimeout(() => {
-        product.classList.add('fade-in');
-        product.style.opacity = '1';
-      }, 100);
-    }, 500);
-
-    // Показываем кнопку "Оплатить"
-    if (itemCount >= 3) {
-      payBtn.classList.remove('hide');
-    }
-  }
-}
+  dropProduct(product);
+});

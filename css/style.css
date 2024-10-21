@@ -110,6 +110,7 @@ input::-webkit-search-results-decoration {
   position: absolute;
   z-index: 10;
   cursor: grab;
+  background-color: inherit;
 }
 
 .shelf__product:active {
