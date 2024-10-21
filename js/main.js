@@ -1,6 +1,7 @@
 const products = document.querySelectorAll('.shelf__product'); // Продукты
 const cart = document.getElementById('cart'); // Корзина
 const payBtn = document.getElementById('payment'); // Ссылка
+const cartIcon = document.querySelector('.cart__icon'); // Изображенье корзины
 let itemCount = 0;
 let draggedElement = null;
 let initialPosition = {};
@@ -24,7 +25,7 @@ function touchStart(e) {
   const rect = draggedElement.getBoundingClientRect();
   initialPosition = {
     x: e.touches[0].clientX - rect.left,
-    y: e.touches[0].clientY - rect.top,
+    y: e.touches[0].clientY - rect.top
   };
   draggedElement.style.position = 'absolute';
 }
@@ -100,4 +101,26 @@ cart.addEventListener('drop', e => {
   const productId = e.dataTransfer.getData('text');
   const product = document.getElementById(productId);
   dropProduct(product);
+});
+
+// Для анимации при нажатие на btn
+payBtn.addEventListener('click', e => {
+  e.preventDefault();
+  const delay = 1500;
+  const productsInCart = document.querySelectorAll('.fade-in'); // Продукты
+  for (const product of productsInCart) {
+    product.classList.add('active');
+    setTimeout(() => {
+      product.classList.remove('active');
+    }, delay);
+  }
+
+  payBtn.textContent = 'Хороших покупок!'; // Меняем текст кнопки
+
+  cartIcon.classList.add('active');
+  // Переходим на другую страницу
+  setTimeout(() => {
+    window.location.href = payBtn.href;
+    cartIcon.classList.remove('active');
+  }, delay);
 });

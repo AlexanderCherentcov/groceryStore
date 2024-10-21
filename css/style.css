@@ -196,6 +196,9 @@ input::-webkit-search-results-decoration {
   position: relative;
   z-index: 15;
   padding: 20px;
+  transition: transform 0.5s ease-in-out;
+  -webkit-transition: transform 0.5s ease-in-out; /* Префикс для Safari */
+  -moz-transition: transform 0.5s ease-in-out; /* Префикс для Firefox */
 }
 
 .cart__product {
@@ -233,10 +236,9 @@ input::-webkit-search-results-decoration {
 
 .fade-in,
 .fade-out {
-  transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out; /* Префикс для Safari */
-  -moz-transition: opacity 0.5s ease-in-out; /* Префикс для Firefox */
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Префикс для Safari */
+  -moz-transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Префикс для Firefox */
 }
 
 .fade-out {
@@ -253,4 +255,8 @@ input::-webkit-search-results-decoration {
 
 .fade-in {
   opacity: 1;
+}
+
+.active {
+  transform: translateX(60px);
 }
